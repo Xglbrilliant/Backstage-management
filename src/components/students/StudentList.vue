@@ -1,57 +1,47 @@
 <template>
   <div style="height: 100%">
-    <el-table :data="tableData" style="width: 100% height=100%">
-      <el-table-column prop="date" label="日期" width="180"> </el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"> </el-table-column>
-      <el-table-column prop="address" label="地址"> </el-table-column>
+    <el-table :data="tableData" stripe border style="width: 100%">
+      <el-table-column prop="name" label="姓名" align="center"> </el-table-column>
+      <el-table-column prop="sex" label="性别" align="center"> </el-table-column>
+      <el-table-column prop="age" label="年龄" align="center"> </el-table-column>
+      <el-table-column prop="number" label="电话" align="center"> </el-table-column>
+      <el-table-column prop="class" label="班级" align="center"> </el-table-column>
+      <el-table-column prop="state" label="状态" align="center"> </el-table-column>
+      <el-table-column prop="address" label="地址" align="center"> </el-table-column>
+      <el-table-column prop="phone" label="联系方式" align="center"> </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template>
+          <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
+import { students } from '@/api/api.js'
+
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
-    };
+      tableData: [],
+    }
   },
+  created() {
+    this.getData()
+  },
+  methods: {
+    getData(params) {
+      students(params).then(res => {
+        console.log(res);
+        if(res.data.status === 200) {
+          this.tableData = res.data.data
+        }
+      })
+    }
+  }
 };
 </script>
 <style scoped>
-/* .el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 150px;
-    margin: 0;
-  }
 
-  .el-carousel__item:nth-child(2n) {
-     background-color: #99a9bf;
-  }
-  
-  .el-carousel__item:nth-child(2n+1) {
-     background-color: #d3dce6;
-  } */
 </style>
